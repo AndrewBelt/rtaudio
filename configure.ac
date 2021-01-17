@@ -35,6 +35,9 @@ api=""
 req=""
 use_asio=""
 
+# standards version
+m4_include([m4/ax_cxx_compile_stdcxx.m4])
+AX_CXX_COMPILE_STDCXX(11, noext, mandatory)
 
 # configure flags
 AC_ARG_ENABLE(debug, [AS_HELP_STRING([--enable-debug],[enable various debug output])])
@@ -86,8 +89,8 @@ AC_CHECK_HEADERS(sys/ioctl.h unistd.h)
 AS_IF([test "x${GXX}" = "xyes" ], [
   CXXFLAGS="-Wall -Wextra ${CXXFLAGS}"
   AS_IF([ test "x${enable_debug}" = "xyes" ], [
-    # Add -Werror in debug mode (except unused-function)
-    CXXFLAGS="-Werror -Wno-error=unused-function ${CXXFLAGS}"
+    # Add -Werror in debug mode
+    CXXFLAGS="-Werror ${CXXFLAGS}"
   ], [
     # hide private symbols in non-debug mode
     visibility="-fvisibility=hidden"
